@@ -18,7 +18,7 @@ use SilverStripe\Forms\TextField;
  */
 class TypesenseSearchElement extends BaseElement {
 
-    private static string $icon = 'font-icon-block-layout';
+    private static string $icon = 'font-icon-search';
 
     private static string $description = 'A content block used to display a search form for Typesense';
 
