@@ -1,0 +1,33 @@
+{
+    "name": "nswdpc/silverstripe-typesense-elemental",
+    "description": "Typesense integration for the Silverstripe Elemental module",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "typesense",
+        "cms",
+        "search"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "James",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "dnadesign/silverstripe-elemental": "^5",
+        "nswdpc/silverstripe-typesense-cms": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3"
+    },
+    "autoload": {
+        "psr-4": {
+            "NSWDPC\\Typesense\\Elemental\\": [
+                "src/"
+            ]
+        }
+    }
+}
