@@ -8,6 +8,7 @@ use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\View\ArrayData;
 
 /**
  * This element provides a search form for integration with Typesense in Silverstripe
@@ -53,10 +54,16 @@ class TypesenseSearchElement extends BaseElement {
         return $fields;
     }
 
+    /**
+     * Return the template holding the search form
+     */
     public function SearchForm(): ?SearchForm {
         return $this->getController()->SearchForm();
     }
 
+    /**
+     * Get the current collection being used by the linked search page
+     */
     protected function getCollection(): ?Collection {
         if($page = $this->SearchPage()) {
             return $page->Collection();
