@@ -3,14 +3,11 @@
 namespace NSWDPC\Typesense\Elemental\Models\Elements;
 
 use DNADesign\Elemental\Models\BaseElement;
+use ElliotSawyer\SilverstripeTypesense\Collection;
+use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
-use NSWDPC\SearchForms\Forms\SearchForm;
-use SilverStripe\Control\Controller;
 use SilverStripe\Forms\DropdownField;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\TextField;
 
 /**
  * This element provides a search form for integration with Typesense in Silverstripe
@@ -50,40 +47,22 @@ class TypesenseSearchElement extends BaseElement {
             DropdownField::create(
                 'SearchPageID',
                 _t(static::class . '.SEARCH_PAGE_SELECT', 'Select a results page'),
-                TypesenseSearchPage::get()->sort(['Title' => 'ASC'])->map('ID','MenuTitle')
+                TypesenseSearchPage::get()->sort(['Title' => 'ASC'])->map('ID','TitleWithCollection')
             )->setEmptyString('')
         );
         return $fields;
     }
 
-    /**
-     * Return the search form
-     */
     public function SearchForm(): ?SearchForm {
-        $page = $this->SearchPage();
-        if(!$page || !$page->isInDB()) {
+        return $this->getController()->SearchForm();
+    }
+
+    protected function getCollection(): ?Collection {
+        if($page = $this->SearchPage()) {
+            return $page->Collection();
+        } else {
             return null;
         }
-        $action = $page->Link('SearchForm');// action is the form on the page
-        $controller = Controller::curr();
-        $form = SearchForm::create(
-            $controller,
-            'SearchForm',
-            FieldList::create(
-                TextField::create(
-                    'Search',
-                    _t(self::class . '.SEARCH_TERM_LABEL', 'Search for')
-                )
-            ),
-            FieldList::create(
-                FormAction::create(
-                    'doSearch',
-                    'Search'
-                )
-            )
-        );
-        $form->setFormAction($action);// point at destination page
-        return $form;
     }
 
 }
