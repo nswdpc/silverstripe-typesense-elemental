@@ -6,4 +6,6 @@
 
     {$SearchForm}
 
+    <% include NSWDPC/Search/Typesense/InstantSearchResults %>
+
 </div>

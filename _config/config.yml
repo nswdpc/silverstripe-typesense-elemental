@@ -1,3 +1,6 @@
 ---
 Name: nswdpc-typesense-elemental
 ---
+NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement:
+  extensions:
+    - 'NSWDPC\Search\Typesense\Extensions\InstantSearchExtension'
