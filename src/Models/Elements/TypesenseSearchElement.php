@@ -80,4 +80,15 @@ class TypesenseSearchElement extends BaseElement {
         return $this->getAnchor();
     }
 
+    /**
+     * Get the input that instantsearch will bind to
+     */
+    public function getTypesenseBindToInputId(): string {
+        return "SearchForm_SearchForm_Search";
+    }
+
+    public function getTypesenseBindToParentId(): string {
+        return 'SearchForm_SearchForm';
+    }
+
 }
