@@ -64,12 +64,31 @@ class TypesenseSearchElement extends BaseElement {
     /**
      * Get the current collection being used by the linked search page
      */
-    protected function getCollection(): ?Collection {
+    public function getCollection(): ?Collection {
         if($page = $this->SearchPage()) {
             return $page->Collection();
         } else {
             return null;
         }
+    }
+
+    /**
+     * Anchor can be used for the prefix for the DOM elements holding results
+     * Used in InstantSearch result handling
+     */
+    public function getTypesenseUniqID(): string {
+        return $this->getAnchor();
+    }
+
+    /**
+     * Get the input that instantsearch will bind to
+     */
+    public function getTypesenseBindToInputId(): string {
+        return "SearchForm_SearchForm_Search";
+    }
+
+    public function getTypesenseBindToParentId(): string {
+        return 'SearchForm_SearchForm';
     }
 
 }
