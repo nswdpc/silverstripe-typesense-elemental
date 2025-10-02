@@ -28,19 +28,23 @@ class TypesenseSearchElementController extends ElementController {
         if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
             return null;
         }
+
         $controller = Controller::curr();// current controller this element is on
         if(!$controller) {
             return null;
         }
+
         if(!$controller->hasMethod('Link')) {
             // controller must have a Link() method
             return null;
         }
+
         // the collection is linked to the search page selected
         $collection = $page->Collection();
         if(!($collection instanceof Collection)) {
             return null;
         }
+
         $form = FormCreator::createForCollection($controller, $collection, "SearchForm", ($this instanceof TypesenseAdvancedSearchElementController));
         $form->setFormAction(
             Controller::join_links(
@@ -66,11 +70,13 @@ class TypesenseSearchElementController extends ElementController {
     {
         $term = $data['Search'] ?? '';
         $term = strip_tags(trim((string)$term));
+
         $element = $this->getElement();
         $page = $element->SearchPage();
         if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
             return null;
         }
+
         return $this->redirect( $page->Link('?q=' . $term));
     }
 }

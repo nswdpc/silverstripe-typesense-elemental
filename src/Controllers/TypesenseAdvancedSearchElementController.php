@@ -23,6 +23,7 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
     /**
      * Process a typesense search and redirect to results
      */
+    #[\Override]
     public function doSearch(array $data, SearchForm $form): \SilverStripe\Control\HTTPResponse
     {
         $element = $this->getElement();
@@ -31,18 +32,19 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
             // ERROR
             return $this->redirectBack();
         }
+
         $collection = $page->Collection();
         if(!$collection) {
             // ERROR
             return $this->redirectBack();
         }
+
         $searchFields = $collection->Fields()->column('name');
         $queryFields = array_filter(
             $data,
-            function($v, $k) use ($searchFields) {
+            fn($v, $k): bool =>
                 // only allow fields that are known search fields, and non empty string values
-                return in_array($k, $searchFields) && $v !== '';
-            },
+                in_array($k, $searchFields) && $v !== '',
             ARRAY_FILTER_USE_BOTH
         );
         $queryFields['q'] = 1;

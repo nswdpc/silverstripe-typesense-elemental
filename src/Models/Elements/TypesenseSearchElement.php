@@ -13,6 +13,9 @@ use SilverStripe\View\ArrayData;
 /**
  * This element provides a search form for integration with Typesense in Silverstripe
  * Add it to a page or elemental-enabled DataObject where you would like your form to be
+ * @property int $SearchPageID
+ * @method \NSWDPC\Typesense\CMS\Models\TypesenseSearchPage SearchPage()
+ * @mixin \NSWDPC\Search\Typesense\Extensions\InstantSearchExtension
  */
 class TypesenseSearchElement extends BaseElement {
 
@@ -32,15 +35,17 @@ class TypesenseSearchElement extends BaseElement {
         'SearchPage' => TypesenseSearchPage::class // source of Typesense configuration and results display
     ];
 
-    private static $controller_class = TypesenseSearchElementController::class;
+    private static string $controller_class = TypesenseSearchElementController::class;
 
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function getType() {
         return _t(static::class . '.BlockType', $this->i18n_singular_name());
     }
 
+    #[\Override]
     public function getCmsFields() {
         $fields = parent::getCmsFields();
         $fields->addFieldToTab(

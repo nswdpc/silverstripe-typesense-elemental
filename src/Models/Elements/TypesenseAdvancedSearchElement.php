@@ -33,6 +33,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement {
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function getType() {
         return _t(static::class . '.BlockType', $this->i18n_singular_name());
     }
@@ -46,9 +47,10 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement {
         $isSearching = $request->getVar('q') == 1;
         if($isSearching) {
             $collection = $this->getCollection();
-            if(!$collection) {
+            if(!$collection instanceof \ElliotSawyer\SilverstripeTypesense\Collection) {
                 return null;
             }
+
             $handler = SearchHandler::create();
             $data = $request->getVars();
             unset($data['q']);
@@ -78,6 +80,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement {
         Requirements::customCss($style, "TypesenseAdvancedSearchElement");
     }
 
+    #[\Override]
     public function forTemplate($holder = true) {
         $this->applyDefaultStyle();
         return parent::forTemplate($holder);
