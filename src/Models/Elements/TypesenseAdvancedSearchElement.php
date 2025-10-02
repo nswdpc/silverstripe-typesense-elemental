@@ -6,6 +6,7 @@ use NSWDPC\Search\Typesense\Services\SearchHandler;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\PaginatedList;
 use SilverStripe\View\Requirements;
 
 /**
@@ -40,7 +41,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
     /**
      * Return the template holding the search results
      */
-    public function SearchResults(): ?ArrayList
+    public function SearchResults(): ?PaginatedList
     {
         $controller = Controller::curr();
         $request = $controller->getRequest();

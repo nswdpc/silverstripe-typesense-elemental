@@ -75,7 +75,7 @@ class TypesenseSearchElementController extends ElementController
         $element = $this->getElement();
         $page = $element->SearchPage();
         if (!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
-            return null;
+            return $this->redirectBack();
         }
 
         return $this->redirect($page->Link('?q=' . $term));
