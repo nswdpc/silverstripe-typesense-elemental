@@ -5,7 +5,6 @@ namespace NSWDPC\Typesense\Elemental\Models\Elements;
 use NSWDPC\Search\Typesense\Services\SearchHandler;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\PaginatedList;
 use SilverStripe\View\Requirements;
 
