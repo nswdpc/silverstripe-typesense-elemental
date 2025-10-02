@@ -13,8 +13,8 @@ use SilverStripe\Forms\Form;
 /**
  * Controller for the TypesenseSearchElement
  */
-class TypesenseSearchElementController extends ElementController {
-
+class TypesenseSearchElementController extends ElementController
+{
     private static array $allowed_actions = [
         'SearchForm',
     ];
@@ -22,26 +22,27 @@ class TypesenseSearchElementController extends ElementController {
     /**
      * Return the search form
      */
-    public function SearchForm(): ?SearchForm {
+    public function SearchForm(): ?SearchForm
+    {
         $element = $this->getElement();
         $page = $element->SearchPage();
-        if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
+        if (!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
             return null;
         }
 
         $controller = Controller::curr();// current controller this element is on
-        if(!$controller) {
+        if (!$controller) {
             return null;
         }
 
-        if(!$controller->hasMethod('Link')) {
+        if (!$controller->hasMethod('Link')) {
             // controller must have a Link() method
             return null;
         }
 
         // the collection is linked to the search page selected
         $collection = $page->Collection();
-        if(!($collection instanceof Collection)) {
+        if (!($collection instanceof Collection)) {
             return null;
         }
 
@@ -56,7 +57,7 @@ class TypesenseSearchElementController extends ElementController {
         );
 
         $request = $controller->getRequest();
-        if($request->getVar('q') == 1) {
+        if ($request->getVar('q') == 1) {
             $form->loadDataFrom($request->getVars());
         }
 
@@ -73,10 +74,10 @@ class TypesenseSearchElementController extends ElementController {
 
         $element = $this->getElement();
         $page = $element->SearchPage();
-        if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
+        if (!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
             return null;
         }
 
-        return $this->redirect( $page->Link('?q=' . $term));
+        return $this->redirect($page->Link('?q=' . $term));
     }
 }

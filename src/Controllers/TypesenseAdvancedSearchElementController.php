@@ -2,20 +2,15 @@
 
 namespace NSWDPC\Typesense\Elemental\Controllers;
 
-use DNADesign\Elemental\Controllers\ElementController;
-use ElliotSawyer\SilverstripeTypesense\Collection;
-use NSWDPC\Search\Forms\Forms\AdvancedSearchForm;
 use NSWDPC\Search\Forms\Forms\SearchForm;
-use NSWDPC\Search\Typesense\Services\FormCreator;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use SilverStripe\Control\Controller;
-use SilverStripe\Forms\Form;
 
 /**
  * Controller for the TypesenseAdvancedSearchElement
  */
-class TypesenseAdvancedSearchElementController extends TypesenseSearchElementController {
-
+class TypesenseAdvancedSearchElementController extends TypesenseSearchElementController
+{
     private static array $allowed_actions = [
         'SearchForm',
     ];
@@ -28,13 +23,13 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
     {
         $element = $this->getElement();
         $page = $element->SearchPage();
-        if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
+        if (!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
             // ERROR
             return $this->redirectBack();
         }
 
         $collection = $page->Collection();
-        if(!$collection) {
+        if (!$collection) {
             // ERROR
             return $this->redirectBack();
         }
@@ -42,7 +37,7 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
         $searchFields = $collection->Fields()->column('name');
         $queryFields = array_filter(
             $data,
-            fn($v, $k): bool =>
+            fn ($v, $k): bool =>
                 // only allow fields that are known search fields, and non empty string values
                 in_array($k, $searchFields) && $v !== '',
             ARRAY_FILTER_USE_BOTH
@@ -50,6 +45,6 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
         $queryFields['q'] = 1;
         $query = http_build_query($queryFields);
         $controller = Controller::curr();
-        return $this->redirect( $controller->Link('?' . $query));
+        return $this->redirect($controller->Link('?' . $query));
     }
 }

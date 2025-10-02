@@ -8,7 +8,6 @@ use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
 use SilverStripe\Forms\DropdownField;
-use SilverStripe\View\ArrayData;
 
 /**
  * This element provides a search form for integration with Typesense in Silverstripe
@@ -17,8 +16,8 @@ use SilverStripe\View\ArrayData;
  * @method \NSWDPC\Typesense\CMS\Models\TypesenseSearchPage SearchPage()
  * @mixin \NSWDPC\Search\Typesense\Extensions\InstantSearchExtension
  */
-class TypesenseSearchElement extends BaseElement {
-
+class TypesenseSearchElement extends BaseElement
+{
     private static string $icon = 'font-icon-search';
 
     private static string $description = 'A content block used to display a search form for Typesense';
@@ -41,19 +40,21 @@ class TypesenseSearchElement extends BaseElement {
      * @inheritdoc
      */
     #[\Override]
-    public function getType() {
+    public function getType()
+    {
         return _t(static::class . '.BlockType', $this->i18n_singular_name());
     }
 
     #[\Override]
-    public function getCmsFields() {
+    public function getCmsFields()
+    {
         $fields = parent::getCmsFields();
         $fields->addFieldToTab(
             'Root.Main',
             DropdownField::create(
                 'SearchPageID',
                 _t(static::class . '.SEARCH_PAGE_SELECT', 'Select a results page'),
-                TypesenseSearchPage::get()->sort(['Title' => 'ASC'])->map('ID','TitleWithCollection')
+                TypesenseSearchPage::get()->sort(['Title' => 'ASC'])->map('ID', 'TitleWithCollection')
             )->setEmptyString('')
         );
         return $fields;
@@ -62,15 +63,17 @@ class TypesenseSearchElement extends BaseElement {
     /**
      * Return the template holding the search form
      */
-    public function SearchForm(): ?SearchForm {
+    public function SearchForm(): ?SearchForm
+    {
         return $this->getController()->SearchForm();
     }
 
     /**
      * Get the current collection being used by the linked search page
      */
-    public function getCollection(): ?Collection {
-        if($page = $this->SearchPage()) {
+    public function getCollection(): ?Collection
+    {
+        if ($page = $this->SearchPage()) {
             return $page->Collection();
         } else {
             return null;
@@ -81,18 +84,21 @@ class TypesenseSearchElement extends BaseElement {
      * Anchor can be used for the prefix for the DOM elements holding results
      * Used in InstantSearch result handling
      */
-    public function getTypesenseUniqID(): string {
+    public function getTypesenseUniqID(): string
+    {
         return $this->getAnchor();
     }
 
     /**
      * Get the input that instantsearch will bind to
      */
-    public function getTypesenseBindToInputId(): string {
+    public function getTypesenseBindToInputId(): string
+    {
         return "SearchForm_SearchForm_Search";
     }
 
-    public function getTypesenseBindToParentId(): string {
+    public function getTypesenseBindToParentId(): string
+    {
         return 'SearchForm_SearchForm';
     }
 
