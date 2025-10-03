@@ -66,7 +66,7 @@ class TypesenseSearchElement extends BaseElement
     public function SearchForm(): ?SearchForm
     {
         $controller = $this->getController();
-        if(!$controller instanceof TypesenseSearchElementController) {
+        if (!$controller instanceof TypesenseSearchElementController) {
             return null;
         } else {
             return $controller->SearchForm();

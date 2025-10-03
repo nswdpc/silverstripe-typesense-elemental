@@ -6,7 +6,6 @@ use DNADesign\Elemental\Controllers\ElementController;
 use ElliotSawyer\SilverstripeTypesense\Collection;
 use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Search\Typesense\Services\FormCreator;
-use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\Form;
@@ -26,7 +25,7 @@ class TypesenseSearchElementController extends ElementController
     public function SearchForm(): ?SearchForm
     {
         $element = $this->getElement();
-        if(!$element instanceof TypesenseSearchElement) {
+        if (!$element instanceof TypesenseSearchElement) {
             return null;
         }
 
@@ -78,7 +77,7 @@ class TypesenseSearchElementController extends ElementController
         $term = strip_tags(trim((string)$term));
 
         $element = $this->getElement();
-        if(!$element instanceof TypesenseSearchElement) {
+        if (!$element instanceof TypesenseSearchElement) {
             // ERROR
             return $this->redirectBack();
         }
