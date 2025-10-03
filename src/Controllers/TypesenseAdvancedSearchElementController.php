@@ -27,6 +27,7 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
             // ERROR
             return $this->redirectBack();
         }
+
         $page = $element->SearchPage();
         if (!$page || !$page->isInDB()) {
             // ERROR

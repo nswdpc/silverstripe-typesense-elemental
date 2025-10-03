@@ -29,6 +29,7 @@ class TypesenseSearchElementController extends ElementController
         if(!$element instanceof TypesenseSearchElement) {
             return null;
         }
+
         $page = $element->SearchPage();
         if (!$page || !$page->isInDB()) {
             return null;
@@ -81,6 +82,7 @@ class TypesenseSearchElementController extends ElementController
             // ERROR
             return $this->redirectBack();
         }
+
         $page = $element->SearchPage();
         if (!$page || !$page->isInDB()) {
             // ERROR
