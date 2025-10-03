@@ -4,6 +4,7 @@ namespace NSWDPC\Typesense\Elemental\Controllers;
 
 use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
+use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseAdvancedSearchElement;
 use SilverStripe\Control\Controller;
 
 /**
@@ -22,8 +23,12 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
     public function doSearch(array $data, SearchForm $form): \SilverStripe\Control\HTTPResponse
     {
         $element = $this->getElement();
+        if(!$element instanceof TypesenseAdvancedSearchElement) {
+            // ERROR
+            return $this->redirectBack();
+        }
         $page = $element->SearchPage();
-        if (!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
+        if (!$page || !$page->isInDB()) {
             // ERROR
             return $this->redirectBack();
         }
