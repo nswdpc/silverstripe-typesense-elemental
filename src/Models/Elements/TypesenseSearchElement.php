@@ -3,7 +3,7 @@
 namespace NSWDPC\Typesense\Elemental\Models\Elements;
 
 use DNADesign\Elemental\Models\BaseElement;
-use ElliotSawyer\SilverstripeTypesense\Collection;
+use NSWDPC\Search\Typesense\Models\TypesenseSearchCollection as Collection;
 use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
