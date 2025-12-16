@@ -6,15 +6,15 @@ use DNADesign\Elemental\Controllers\ElementController;
 use ElliotSawyer\SilverstripeTypesense\Collection;
 use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Search\Typesense\Services\FormCreator;
-use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
+use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\Form;
 
 /**
  * Controller for the TypesenseSearchElement
  */
-class TypesenseSearchElementController extends ElementController {
-
+class TypesenseSearchElementController extends ElementController
+{
     private static array $allowed_actions = [
         'SearchForm',
     ];
@@ -22,25 +22,34 @@ class TypesenseSearchElementController extends ElementController {
     /**
      * Return the search form
      */
-    public function SearchForm(): ?SearchForm {
+    public function SearchForm(): ?SearchForm
+    {
         $element = $this->getElement();
+        if (!$element instanceof TypesenseSearchElement) {
+            return null;
+        }
+
         $page = $element->SearchPage();
-        if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
+        if (!$page || !$page->isInDB()) {
             return null;
         }
+
         $controller = Controller::curr();// current controller this element is on
-        if(!$controller) {
+        if (!$controller) {
             return null;
         }
-        if(!$controller->hasMethod('Link')) {
+
+        if (!$controller->hasMethod('Link')) {
             // controller must have a Link() method
             return null;
         }
+
         // the collection is linked to the search page selected
         $collection = $page->Collection();
-        if(!($collection instanceof Collection)) {
+        if (!($collection instanceof Collection)) {
             return null;
         }
+
         $form = FormCreator::createForCollection($controller, $collection, "SearchForm", ($this instanceof TypesenseAdvancedSearchElementController));
         $form->setFormAction(
             Controller::join_links(
@@ -52,7 +61,7 @@ class TypesenseSearchElementController extends ElementController {
         );
 
         $request = $controller->getRequest();
-        if($request->getVar('q') == 1) {
+        if ($request->getVar('q') == 1) {
             $form->loadDataFrom($request->getVars());
         }
 
@@ -66,11 +75,19 @@ class TypesenseSearchElementController extends ElementController {
     {
         $term = $data['Search'] ?? '';
         $term = strip_tags(trim((string)$term));
+
         $element = $this->getElement();
-        $page = $element->SearchPage();
-        if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
-            return null;
+        if (!$element instanceof TypesenseSearchElement) {
+            // ERROR
+            return $this->redirectBack();
         }
-        return $this->redirect( $page->Link('?q=' . $term));
+
+        $page = $element->SearchPage();
+        if (!$page || !$page->isInDB()) {
+            // ERROR
+            return $this->redirectBack();
+        }
+
+        return $this->redirect($page->Link('?q=' . $term));
     }
 }

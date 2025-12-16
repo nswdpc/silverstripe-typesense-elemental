@@ -2,20 +2,15 @@
 
 namespace NSWDPC\Typesense\Elemental\Controllers;
 
-use DNADesign\Elemental\Controllers\ElementController;
-use ElliotSawyer\SilverstripeTypesense\Collection;
-use NSWDPC\Search\Forms\Forms\AdvancedSearchForm;
 use NSWDPC\Search\Forms\Forms\SearchForm;
-use NSWDPC\Search\Typesense\Services\FormCreator;
-use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
+use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseAdvancedSearchElement;
 use SilverStripe\Control\Controller;
-use SilverStripe\Forms\Form;
 
 /**
  * Controller for the TypesenseAdvancedSearchElement
  */
-class TypesenseAdvancedSearchElementController extends TypesenseSearchElementController {
-
+class TypesenseAdvancedSearchElementController extends TypesenseSearchElementController
+{
     private static array $allowed_actions = [
         'SearchForm',
     ];
@@ -23,31 +18,38 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
     /**
      * Process a typesense search and redirect to results
      */
+    #[\Override]
     public function doSearch(array $data, SearchForm $form): \SilverStripe\Control\HTTPResponse
     {
         $element = $this->getElement();
+        if (!$element instanceof TypesenseAdvancedSearchElement) {
+            // ERROR
+            return $this->redirectBack();
+        }
+
         $page = $element->SearchPage();
-        if(!$page || !$page->isInDB() || !($page instanceof TypesenseSearchPage)) {
+        if (!$page || !$page->isInDB()) {
             // ERROR
             return $this->redirectBack();
         }
+
         $collection = $page->Collection();
-        if(!$collection) {
+        if (!$collection) {
             // ERROR
             return $this->redirectBack();
         }
+
         $searchFields = $collection->Fields()->column('name');
         $queryFields = array_filter(
             $data,
-            function($v, $k) use ($searchFields) {
+            fn ($v, $k): bool =>
                 // only allow fields that are known search fields, and non empty string values
-                return in_array($k, $searchFields) && $v !== '';
-            },
+                in_array($k, $searchFields) && $v !== '',
             ARRAY_FILTER_USE_BOTH
         );
         $queryFields['q'] = 1;
         $query = http_build_query($queryFields);
         $controller = Controller::curr();
-        return $this->redirect( $controller->Link('?' . $query));
+        return $this->redirect($controller->Link('?' . $query));
     }
 }
