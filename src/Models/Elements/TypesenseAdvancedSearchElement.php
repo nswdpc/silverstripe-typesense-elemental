@@ -4,6 +4,7 @@ namespace NSWDPC\Typesense\Elemental\Models\Elements;
 
 use NSWDPC\Search\Typesense\Services\SearchHandler;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
+use NSWDPC\Search\Typesense\Models\TypesenseSearchCollection as Collection;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\PaginatedList;
 use SilverStripe\View\Requirements;
@@ -47,7 +48,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
         $isSearching = $request->getVar('q') == 1;
         if ($isSearching) {
             $collection = $this->getCollection();
-            if (!$collection instanceof \ElliotSawyer\SilverstripeTypesense\Collection) {
+            if (!$collection instanceof Collection) {
                 return null;
             }
 
