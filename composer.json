@@ -23,7 +23,7 @@
     ],
     "require": {
         "dnadesign/silverstripe-elemental": "^5",
-        "nswdpc/silverstripe-typesense-cms": "dev-main as 0.2.9999"
+        "nswdpc/silverstripe-typesense-cms": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
