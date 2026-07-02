@@ -17,7 +17,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
 {
     private static string $icon = 'font-icon-search';
 
-    private static string $description = 'A content block used to display an advanced search form for Typesense';
+    private static string $class_description = 'A content block used to display an advanced search form for Typesense';
 
     private static string $singular_name = 'Typesense advanced search element';
 
