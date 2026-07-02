@@ -6,7 +6,7 @@ use NSWDPC\Search\Typesense\Services\SearchHandler;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use NSWDPC\Search\Typesense\Models\TypesenseSearchCollection as Collection;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\PaginatedList;
+use SilverStripe\Model\List\PaginatedList;
 use SilverStripe\View\Requirements;
 
 /**
@@ -83,7 +83,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
     }
 
     #[\Override]
-    public function forTemplate($holder = true)
+    public function forTemplate($holder = true): string
     {
         $this->applyDefaultStyle();
         return parent::forTemplate($holder);
