@@ -23,11 +23,6 @@ class TypesenseSearchElementControllerTest extends SapphireTest
         TypesenseSearchPage::class
     ];
 
-    private function emptyForm(Controller $controller): SearchForm
-    {
-        return SearchForm::create($controller, 'SearchForm', FieldList::create(), FieldList::create());
-    }
-
     public function testSearchFormIsNullWithoutSearchPage(): void
     {
         $element = TypesenseSearchElement::create();

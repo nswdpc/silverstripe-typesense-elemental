@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NSWDPC\Typesense\Elemental\Tests;
 
 use NSWDPC\Search\Forms\Forms\AdvancedSearchForm;
@@ -23,11 +25,6 @@ class TypesenseAdvancedSearchElementControllerTest extends SapphireTest
         \Page::class,
         TypesenseSearchPage::class
     ];
-
-    private function emptyForm(Controller $controller): SearchForm
-    {
-        return SearchForm::create($controller, 'SearchForm', FieldList::create(), FieldList::create());
-    }
 
     private function makeElementWithCollection(): array
     {
