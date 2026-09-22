@@ -7,7 +7,6 @@ use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
 use SilverStripe\Dev\SapphireTest;
-use SilverStripe\View\Requirements;
 
 class TypesenseAdvancedSearchElementTest extends SapphireTest
 {
