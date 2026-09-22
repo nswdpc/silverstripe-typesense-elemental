@@ -55,7 +55,7 @@ class TypesenseAdvancedSearchElementControllerTest extends SapphireTest
         $hostPage = $this->createSearchPage(null, 'Host page');
         $controller = TypesenseAdvancedSearchElementController::create($element);
 
-        [$response, $hostLink] = $this->withCurrentController($hostPage, function ($hostController) use ($controller) {
+        [$response, $hostLink] = $this->withCurrentController($hostPage, function ($hostController) use ($controller): array {
             $controller->setRequest(new HTTPRequest('POST', '/'));
             $response = $controller->doSearch(['Title' => 'Foo'], $this->emptyForm($controller));
             return [$response, $hostController->Link()];

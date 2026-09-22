@@ -60,7 +60,7 @@ class TypesenseSearchElementControllerTest extends SapphireTest
 
         $controller = TypesenseSearchElementController::create($element);
 
-        [$form, $expectedAction] = $this->withCurrentController($hostPage, function ($hostController) use ($controller, $element) {
+        [$form, $expectedAction] = $this->withCurrentController($hostPage, function ($hostController) use ($controller, $element): array {
             $form = $controller->SearchForm();
             $expectedAction = Controller::join_links($hostController->Link(), 'element', $element->ID, 'SearchForm');
             return [$form, $expectedAction];

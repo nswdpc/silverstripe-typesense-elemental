@@ -68,9 +68,8 @@ class TypesenseSearchElement extends BaseElement
         $controller = $this->getController();
         if (!$controller instanceof TypesenseSearchElementController) {
             return null;
-        } else {
-            return $controller->SearchForm();
         }
+        return $controller->SearchForm();
     }
 
     /**
@@ -80,9 +79,8 @@ class TypesenseSearchElement extends BaseElement
     {
         if ($page = $this->SearchPage()) {
             return $page->Collection();
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
