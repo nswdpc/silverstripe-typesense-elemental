@@ -59,6 +59,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
             $results = $handler->doSearch($collection, $data);
             return $results;
         }
+
         return null;
     }
 
