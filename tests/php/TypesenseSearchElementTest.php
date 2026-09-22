@@ -2,10 +2,8 @@
 
 namespace NSWDPC\Typesense\Elemental\Tests;
 
-use DNADesign\Elemental\Controllers\ElementController;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
-use SilverStripe\Control\Controller;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\DropdownField;
 
