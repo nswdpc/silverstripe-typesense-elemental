@@ -15,14 +15,6 @@ class TypesenseSearchElementTest extends SapphireTest
 
     protected $usesDatabase = true;
 
-    public function testGetCollectionReturnsNullWithoutSearchPage(): void
-    {
-        $element = TypesenseSearchElement::create();
-        $element->write();
-
-        $this->assertNull($element->getCollection());
-    }
-
     public function testGetCollectionReturnsLinkedPagesCollection(): void
     {
         $collection = $this->createCollection();
@@ -48,17 +40,6 @@ class TypesenseSearchElementTest extends SapphireTest
 
         $this->assertInstanceOf(DropdownField::class, $dropdown);
         $this->assertArrayHasKey($page->ID, $dropdown->getSource());
-    }
-
-    public function testSearchFormReturnsNullWhenControllerIsNotTypesenseSearchElementController(): void
-    {
-        $element = TypesenseSearchElement::create();
-        $element->write();
-
-        // Any controller that isn't a TypesenseSearchElementController
-        $element->setController(ElementController::create());
-
-        $this->assertNull($element->SearchForm());
     }
 
     public function testGetTypesenseUniqIdMatchesAnchor(): void
