@@ -43,6 +43,7 @@ trait ScaffoldingTrait
         $page = TypesenseSearchPage::create([
             'Title' => $title,
             'CollectionID' => $collection->ID ?? 0,
+            'SearchScope' => '{}'
         ]);
         $page->write();
         return $page;
