@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Typesense\Elemental\Tests;
 
+use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Dev\SapphireTest;
@@ -12,6 +13,11 @@ class TypesenseSearchElementTest extends SapphireTest
     use ScaffoldingTrait;
 
     protected $usesDatabase = true;
+
+    protected static $extra_dataobjects = [
+        \Page::class,
+        TypesenseSearchPage::class
+    ];
 
     public function testGetCollectionReturnsLinkedPagesCollection(): void
     {

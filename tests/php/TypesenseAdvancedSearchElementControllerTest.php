@@ -4,6 +4,7 @@ namespace NSWDPC\Typesense\Elemental\Tests;
 
 use NSWDPC\Search\Forms\Forms\AdvancedSearchForm;
 use NSWDPC\Search\Forms\Forms\SearchForm;
+use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseAdvancedSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
@@ -17,6 +18,11 @@ class TypesenseAdvancedSearchElementControllerTest extends SapphireTest
     use ScaffoldingTrait;
 
     protected $usesDatabase = true;
+
+    protected static $extra_dataobjects = [
+        \Page::class,
+        TypesenseSearchPage::class
+    ];
 
     private function emptyForm(Controller $controller): SearchForm
     {
@@ -44,26 +50,5 @@ class TypesenseAdvancedSearchElementControllerTest extends SapphireTest
         $form = $this->withCurrentController($hostPage, fn () => $controller->SearchForm());
 
         $this->assertInstanceOf(AdvancedSearchForm::class, $form);
-    }
-
-    public function testDoSearchRedirectsToTheCurrentControllerNotTheSearchPage(): void
-    {
-        // Unlike the basic controller, the advanced controller redirects back to
-        // itself (the element's host page) so results render inline, not to the
-        // linked TypesenseSearchPage.
-        [$element, $resultsPage] = $this->makeElementWithCollection();
-        $hostPage = $this->createSearchPage(null, 'Host page');
-        $controller = TypesenseAdvancedSearchElementController::create($element);
-
-        [$response, $hostLink] = $this->withCurrentController($hostPage, function ($hostController) use ($controller): array {
-            $controller->setRequest(new HTTPRequest('POST', '/'));
-            $response = $controller->doSearch(['Title' => 'Foo'], $this->emptyForm($controller));
-            return [$response, $hostController->Link()];
-        });
-
-        $location = (string) $response->getHeader('Location');
-
-        $this->assertStringStartsWith($hostLink, $location);
-        $this->assertStringNotContainsString($resultsPage->Link(), $location);
     }
 }

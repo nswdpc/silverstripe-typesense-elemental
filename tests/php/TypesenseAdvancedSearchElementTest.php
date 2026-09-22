@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Typesense\Elemental\Tests;
 
+use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseAdvancedSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Control\HTTPRequest;
@@ -13,6 +14,11 @@ class TypesenseAdvancedSearchElementTest extends SapphireTest
     use ScaffoldingTrait;
 
     protected $usesDatabase = true;
+
+    protected static $extra_dataobjects = [
+        \Page::class,
+        TypesenseSearchPage::class
+    ];
 
     private function withRequestVars(array $vars, callable $callback): mixed
     {

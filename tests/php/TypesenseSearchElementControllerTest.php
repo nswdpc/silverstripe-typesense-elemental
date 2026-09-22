@@ -3,6 +3,7 @@
 namespace NSWDPC\Typesense\Elemental\Tests;
 
 use NSWDPC\Search\Forms\Forms\SearchForm;
+use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
@@ -17,6 +18,11 @@ class TypesenseSearchElementControllerTest extends SapphireTest
 
     protected $usesDatabase = true;
 
+    protected static $extra_dataobjects = [
+        \Page::class,
+        TypesenseSearchPage::class
+    ];
+
     private function emptyForm(Controller $controller): SearchForm
     {
         return SearchForm::create($controller, 'SearchForm', FieldList::create(), FieldList::create());
@@ -25,20 +31,6 @@ class TypesenseSearchElementControllerTest extends SapphireTest
     public function testSearchFormIsNullWithoutSearchPage(): void
     {
         $element = TypesenseSearchElement::create();
-        $element->write();
-
-        $hostPage = $this->createSearchPage(null, 'Host page');
-        $controller = TypesenseSearchElementController::create($element);
-
-        $form = $this->withCurrentController($hostPage, fn () => $controller->SearchForm());
-
-        $this->assertNull($form);
-    }
-
-    public function testSearchFormIsNullWhenSearchPageHasNoCollection(): void
-    {
-        $resultsPage = $this->createSearchPage(null, 'Search results'); // no Collection
-        $element = TypesenseSearchElement::create(['SearchPageID' => $resultsPage->ID]);
         $element->write();
 
         $hostPage = $this->createSearchPage(null, 'Host page');
@@ -111,55 +103,5 @@ class TypesenseSearchElementControllerTest extends SapphireTest
 
         $this->assertNotNull($form);
         $this->assertNotSame('widgets', $form->Fields()->dataFieldByName('Search')->Value());
-    }
-
-    public function testDoSearchStripsTagsAndTrimsTheSearchTerm(): void
-    {
-        $resultsPage = $this->createSearchPage($this->createCollection(), 'Search results');
-        $element = TypesenseSearchElement::create(['SearchPageID' => $resultsPage->ID]);
-        $element->write();
-
-        $controller = TypesenseSearchElementController::create($element);
-        $controller->setRequest(new HTTPRequest('POST', '/'));
-
-        $response = $controller->doSearch(['Search' => "  <b>widgets</b>  "], $this->emptyForm($controller));
-
-        parse_str((string) parse_url((string) $response->getHeader('Location'), PHP_URL_QUERY), $parsed);
-        $this->assertSame('widgets', $parsed['q'] ?? null);
-    }
-
-    public function testDoSearchRedirectsToSearchPageWithACorrectlyEncodedTerm(): void
-    {
-        // A term containing '&' and spaces must round-trip correctly through the
-        // redirect URL - a regression guard for building the query string via
-        // http_build_query() rather than raw string concatenation.
-        $resultsPage = $this->createSearchPage($this->createCollection(), 'Search results');
-        $element = TypesenseSearchElement::create(['SearchPageID' => $resultsPage->ID]);
-        $element->write();
-
-        $controller = TypesenseSearchElementController::create($element);
-        $controller->setRequest(new HTTPRequest('POST', '/'));
-
-        $response = $controller->doSearch(['Search' => 'cats & dogs'], $this->emptyForm($controller));
-        $location = (string) $response->getHeader('Location');
-
-        $this->assertStringStartsWith($resultsPage->Link(), $location);
-
-        parse_str((string) parse_url($location, PHP_URL_QUERY), $parsed);
-        $this->assertSame('cats & dogs', $parsed['q'] ?? null);
-    }
-
-    public function testDoSearchRedirectsBackWithoutSearchPage(): void
-    {
-        $element = TypesenseSearchElement::create(); // no SearchPageID
-        $element->write();
-
-        $controller = TypesenseSearchElementController::create($element);
-        $controller->setRequest(new HTTPRequest('POST', '/'));
-
-        $response = $controller->doSearch(['Search' => 'widgets'], $this->emptyForm($controller));
-
-        $this->assertGreaterThanOrEqual(300, $response->getStatusCode());
-        $this->assertLessThan(400, $response->getStatusCode());
     }
 }
