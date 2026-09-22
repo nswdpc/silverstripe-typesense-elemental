@@ -88,6 +88,6 @@ class TypesenseSearchElementController extends ElementController
             return $this->redirectBack();
         }
 
-        return $this->redirect($page->Link('?q=' . $term));
+        return $this->redirect($page->Link('?' . http_build_query(['q' => $term])));
     }
 }
