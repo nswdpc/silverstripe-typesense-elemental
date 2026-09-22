@@ -2,15 +2,12 @@
 
 namespace NSWDPC\Typesense\Elemental\Tests;
 
-use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Dev\SapphireTest;
-use SilverStripe\Forms\FieldList;
 
 class TypesenseSearchElementControllerTest extends SapphireTest
 {

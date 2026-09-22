@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace NSWDPC\Typesense\Elemental\Tests;
 
 use NSWDPC\Search\Forms\Forms\AdvancedSearchForm;
-use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseAdvancedSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Dev\SapphireTest;
-use SilverStripe\Forms\FieldList;
 
 class TypesenseAdvancedSearchElementControllerTest extends SapphireTest
 {
