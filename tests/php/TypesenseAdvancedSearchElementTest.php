@@ -9,6 +9,8 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
 use SilverStripe\Dev\SapphireTest;
 
+require_once __DIR__ . '/Support/ScaffoldingTrait.php';
+
 class TypesenseAdvancedSearchElementTest extends SapphireTest
 {
     use ScaffoldingTrait;

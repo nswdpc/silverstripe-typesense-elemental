@@ -9,6 +9,8 @@ use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Control\Controller;
 use SilverStripe\Dev\SapphireTest;
 
+require_once __DIR__ . '/Support/ScaffoldingTrait.php';
+
 class TypesenseSearchElementControllerTest extends SapphireTest
 {
     use ScaffoldingTrait;

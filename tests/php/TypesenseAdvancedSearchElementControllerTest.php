@@ -11,6 +11,8 @@ use NSWDPC\Typesense\Elemental\Models\Elements\TypesenseAdvancedSearchElement;
 use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Dev\SapphireTest;
 
+require_once __DIR__ . '/Support/ScaffoldingTrait.php';
+
 class TypesenseAdvancedSearchElementControllerTest extends SapphireTest
 {
     use ScaffoldingTrait;

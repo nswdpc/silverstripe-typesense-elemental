@@ -8,6 +8,8 @@ use NSWDPC\Typesense\Elemental\Tests\Support\ScaffoldingTrait;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\DropdownField;
 
+require_once __DIR__ . '/Support/ScaffoldingTrait.php';
+
 class TypesenseSearchElementTest extends SapphireTest
 {
     use ScaffoldingTrait;
