@@ -39,7 +39,7 @@ class TypesenseAdvancedSearchElementController extends TypesenseSearchElementCon
             return $this->redirectBack();
         }
 
-        $searchFields = $collection->Fields()->column('name');
+        $searchFields = $collection->getCollectionFieldsForQueryBy();
         $queryFields = array_filter(
             $data,
             fn ($v, $k): bool =>

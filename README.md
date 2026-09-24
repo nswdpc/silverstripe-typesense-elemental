@@ -1,15 +1,22 @@
-# Typesense integration with Silverstripe Elemental module
+# Typesense integration with Silverstripe Elemental
 
 Provides an element to display a search form. Results are displayed on the selected page.
 
-### Usage
+## Usage
 
++ Create a page
++ Create a 'Typesense search element' on the page
++ Give the element a title, optionally display the title
++ Select a results page where results will be displayed
++ Save / publish
 
-## Requirements
-
+> The advanced search element is a WIP
 
 ## Installation
 
+```sh
+composer require nswdpc/silverstripe-typesense-elemental
+```
 
 ## License
 
@@ -21,6 +28,7 @@ Provides an element to display a search form. Results are displayed on the selec
 
 ## Configuration
 
+You will need to configure the elements in this module as `allowed_elements` [per the Elemental documentation](https://github.com/silverstripe/silverstripe-elemental/blob/6/docs/en/01_basic_setup.md#limit-allowed-elements)
 
 ## Maintainers
 
