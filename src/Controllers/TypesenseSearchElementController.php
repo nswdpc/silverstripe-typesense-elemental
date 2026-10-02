@@ -35,7 +35,7 @@ class TypesenseSearchElementController extends ElementController
         }
 
         $controller = Controller::curr();// current controller this element is on
-        if (!$controller) {
+        if (!$controller instanceof \SilverStripe\Control\Controller) {
             return null;
         }
 

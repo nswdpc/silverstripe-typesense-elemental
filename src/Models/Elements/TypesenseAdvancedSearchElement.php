@@ -6,7 +6,7 @@ use NSWDPC\Search\Typesense\Services\SearchHandler;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use NSWDPC\Search\Typesense\Models\TypesenseSearchCollection as Collection;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\PaginatedList;
+use SilverStripe\Model\List\PaginatedList;
 use SilverStripe\View\Requirements;
 
 /**
@@ -17,7 +17,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
 {
     private static string $icon = 'font-icon-search';
 
-    private static string $description = 'A content block used to display an advanced search form for Typesense';
+    private static string $class_description = 'A content block used to display an advanced search form for Typesense';
 
     private static string $singular_name = 'Typesense advanced search element';
 
@@ -83,7 +83,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
     }
 
     #[\Override]
-    public function forTemplate($holder = true)
+    public function forTemplate($holder = true): string
     {
         $this->applyDefaultStyle();
         return parent::forTemplate($holder);
