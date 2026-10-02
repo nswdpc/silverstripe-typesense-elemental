@@ -58,9 +58,9 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
             unset($data['flush']);// avoid sending flush to the search
             $results = $handler->doSearch($collection, $data);
             return $results;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
 
