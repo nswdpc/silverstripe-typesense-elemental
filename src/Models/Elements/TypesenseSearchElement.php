@@ -3,7 +3,7 @@
 namespace NSWDPC\Typesense\Elemental\Models\Elements;
 
 use DNADesign\Elemental\Models\BaseElement;
-use ElliotSawyer\SilverstripeTypesense\Collection;
+use NSWDPC\Search\Typesense\Models\TypesenseSearchCollection as Collection;
 use NSWDPC\Search\Forms\Forms\SearchForm;
 use NSWDPC\Typesense\CMS\Models\TypesenseSearchPage;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseSearchElementController;
@@ -68,9 +68,9 @@ class TypesenseSearchElement extends BaseElement
         $controller = $this->getController();
         if (!$controller instanceof TypesenseSearchElementController) {
             return null;
-        } else {
-            return $controller->SearchForm();
         }
+
+        return $controller->SearchForm();
     }
 
     /**
@@ -80,9 +80,9 @@ class TypesenseSearchElement extends BaseElement
     {
         if ($page = $this->SearchPage()) {
             return $page->Collection();
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
