@@ -70,6 +70,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
                 $pageStart = abs((int) $request->getVar($handler->getStartVarName()));
                 return $handler->doSearch($collection, $data, $pageStart, $perPage, $searchScope, $searchOnlyApiKey);
             }
+
             return null;
         }
 
