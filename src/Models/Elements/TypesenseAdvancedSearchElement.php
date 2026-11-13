@@ -2,6 +2,7 @@
 
 namespace NSWDPC\Typesense\Elemental\Models\Elements;
 
+use NSWDPC\Search\Typesense\Services\ScopedSearch;
 use NSWDPC\Search\Typesense\Services\SearchHandler;
 use NSWDPC\Typesense\Elemental\Controllers\TypesenseAdvancedSearchElementController;
 use NSWDPC\Search\Typesense\Models\TypesenseSearchCollection as Collection;
@@ -56,8 +57,21 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
             $data = $request->getVars();
             unset($data['q']);
             unset($data['flush']);// avoid sending flush to the search
-            $results = $handler->doSearch($collection, $data);
-            return $results;
+            if ($page = $this->SearchPage()) {
+                $searchOnlyApiKey = $page->getTypesenseSearchOnlyKey();
+                // an optional search scope, provided as JSON
+                $searchScope = ScopedSearch::getDecodedSearchScope($page->SearchScope ?? '');
+                if (!is_array($searchScope)) {
+                    // no scope
+                    $searchScope = [];
+                }
+
+                $perPage = $page->ResultsPerPage ?? SearchHandler::DEFAULT_PER_PAGE;
+                $pageStart = abs((int) $request->getVar($handler->getStartVarName()));
+                return $handler->doSearch($collection, $data, $pageStart, $perPage, $searchScope, $searchOnlyApiKey);
+            }
+
+            return null;
         }
 
         return null;
