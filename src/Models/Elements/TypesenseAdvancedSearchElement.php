@@ -57,7 +57,7 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
             $data = $request->getVars();
             unset($data['q']);
             unset($data['flush']);// avoid sending flush to the search
-            if($page = $this->SearchPage()) {
+            if ($page = $this->SearchPage()) {
                 $searchOnlyApiKey = $page->getTypesenseSearchOnlyKey();
                 // an optional search scope, provided as JSON
                 $searchScope = ScopedSearch::getDecodedSearchScope($page->SearchScope ?? '');
