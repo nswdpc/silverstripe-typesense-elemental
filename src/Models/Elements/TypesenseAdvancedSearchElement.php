@@ -65,12 +65,12 @@ class TypesenseAdvancedSearchElement extends TypesenseSearchElement
                     // no scope
                     $searchScope = [];
                 }
+
                 $perPage = $page->ResultsPerPage ?? SearchHandler::DEFAULT_PER_PAGE;
                 $pageStart = abs((int) $request->getVar($handler->getStartVarName()));
                 return $handler->doSearch($collection, $data, $pageStart, $perPage, $searchScope, $searchOnlyApiKey);
-            } else {
-                return null;
             }
+            return null;
         }
 
         return null;
